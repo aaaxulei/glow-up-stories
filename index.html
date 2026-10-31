@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glow-Up Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&display=swap">
+<style>
+  /* level list: one playable story, the rest locked until they ship */
+  :root { --ink:#3b2b2b; --paper:#fff; --bg:#fbe9cf; --bg2:#f6dcb6; --gold:#ffc83d; --gold2:#e29a12; --ring:#bfe3f0; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--ink); font-family:'Baloo 2', 'PingFang SC', sans-serif; overflow-x:hidden; }
+  .page { min-height:100%; max-width:520px; margin:0 auto; padding:calc(env(safe-area-inset-top) + 28px) 16px calc(env(safe-area-inset-bottom) + 28px);
+    background:radial-gradient(circle at 20% 15%, #fff4e0 0 18%, transparent 19%) 0 0/90px 90px, radial-gradient(circle at 70% 60%, #f8e1c0 0 12%, transparent 13%) 0 0/120px 120px, var(--bg); }
+  h1 { margin:0 0 6px; text-align:center; font-size:34px; font-weight:800; color:#fff; letter-spacing:.5px;
+    -webkit-text-stroke:6px var(--ink); paint-order:stroke fill; text-shadow:0 4px 0 var(--ink); }
+  .sub { text-align:center; margin:0 0 26px; font-size:16px; opacity:.7; }
+  .grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:34px 18px; }
+  .card { position:relative; background:var(--paper); border:4px solid var(--ink); border-radius:14px; padding:12px 12px 8px;
+    box-shadow:4px 5px 0 var(--ink); cursor:pointer; transition:transform .12s; }
+  .card:active { transform:translateY(2px) scale(.98); }
+  .rings { position:absolute; top:-22px; left:0; right:0; display:flex; justify-content:center; gap:16px; }
+  .rings i { width:12px; height:30px; border:3px solid var(--ink); border-radius:8px; background:linear-gradient(90deg, #fff, var(--ring)); }
+  .cover { position:relative; aspect-ratio:1; border-radius:6px; overflow:hidden; border:3px solid var(--ink); background:#ddd; }
+  .cover img { width:100%; height:100%; object-fit:cover; display:block; }
+  .title { margin:8px 0 0; text-align:center; font-size:clamp(15px, 4.6vw, 20px); font-weight:800; line-height:1.15; color:#fff;
+    -webkit-text-stroke:4px var(--ink); paint-order:stroke fill; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .new { position:absolute; top:-14px; right:-14px; transform:rotate(12deg); z-index:2; background:#ff5c8a; color:#fff; font-size:14px; font-weight:800; padding:0 10px; border:3px solid var(--ink); border-radius:999px; }
+  /* locked: a hazy mystery cover and a gold padlock */
+  .card.locked .cover { background:var(--m); }
+  .card.locked .cover::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 25%, #ffffff55 0 10%, transparent 11%) 0 0/46px 46px; }
+  .q { position:absolute; inset:0; display:grid; place-items:center; font-size:96px; font-weight:800; color:#ffffff80; -webkit-text-stroke:3px #00000018; }
+  .lock { position:absolute; right:6px; bottom:6px; width:58px; height:58px; }
+  .card.locked .title { opacity:.9; }
+  .shake { animation:shake .38s; } @keyframes shake { 20%,60% { transform:translateX(-6px) rotate(-1.5deg); } 40%,80% { transform:translateX(6px) rotate(1.5deg); } }
+  .shake .lock { animation:jiggle .38s; } @keyframes jiggle { 50% { transform:rotate(-14deg) scale(1.1); } }
+  .pager { display:flex; justify-content:center; align-items:center; gap:22px; margin:34px 0 0; font-size:30px; font-weight:800; }
+  .pager svg { width:34px; height:44px; opacity:.35; }
+  @media (max-width:360px) { .title { font-size:16px; } h1 { font-size:28px; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Glow-Up Stories</h1>
+  <p class="sub">Help her turn her life around</p>
+  <div class="grid" id="grid"></div>
+  <div class="pager" aria-label="page 1 of 1">
+    <svg viewBox="0 0 34 44"><path d="M26 4 L8 22 L26 40" fill="none" stroke="#3b2b2b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 4 L8 22 L26 40" fill="none" stroke="#ffc83d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>1/1</span>
+    <svg viewBox="0 0 34 44"><path d="M8 4 L26 22 L8 40" fill="none" stroke="#3b2b2b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 4 L26 22 L8 40" fill="none" stroke="#ffc83d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</div>
+<script>
+// Only level 1 exists; the others are placeholders until they are made
+const LEVELS = [
+  { title: "Chloe's Glow-Up", cover: 'assets/home/cover-01.jpg', href: 'hook.html', isNew: true },
+  { title: 'Coming Soon', mood: 'linear-gradient(160deg, #ffb3c7, #c79bff)' },
+  { title: 'Coming Soon', mood: 'linear-gradient(160deg, #9fd8ff, #7b8cff)' },
+  { title: 'Coming Soon', mood: 'linear-gradient(160deg, #ffd59a, #ff8f7a)' },
+  { title: 'Coming Soon', mood: 'linear-gradient(160deg, #a8ecc9, #4fb3a8)' },
+  { title: 'Coming Soon', mood: 'linear-gradient(160deg, #f7b0ff, #ff8fb1)' },
+];
+const LOCK = `<svg class="lock" viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#fff" stroke="#3b2b2b" stroke-width="4"/>
+  <path d="M21 27 V21 a9 9 0 0 1 18 0 V27" fill="none" stroke="#3b2b2b" stroke-width="8" stroke-linecap="round"/>
+  <path d="M21 27 V21 a9 9 0 0 1 18 0 V27" fill="none" stroke="#c9ced6" stroke-width="4" stroke-linecap="round"/>
+  <rect x="15" y="26" width="30" height="22" rx="6" fill="#ffc83d" stroke="#3b2b2b" stroke-width="4"/>
+  <rect x="18" y="29" width="24" height="6" rx="3" fill="#ffe28a"/>
+  <circle cx="30" cy="36" r="3.4" fill="#3b2b2b"/><rect x="28.4" y="37" width="3.2" height="7" rx="1.6" fill="#3b2b2b"/></svg>`;
+const grid = document.getElementById('grid');
+for (const lv of LEVELS) {
+  const c = document.createElement('div'); c.className = 'card' + (lv.href ? '' : ' locked');
+  c.innerHTML = `<div class="rings"><i></i><i></i><i></i></div>
+    <div class="cover" ${lv.mood ? `style="--m:${lv.mood}"` : ''}>${lv.cover ? `<img src="${lv.cover}" alt="">` : '<div class="q">?</div>'}${lv.href ? '' : LOCK}</div>${lv.isNew ? '<span class="new">NEW</span>' : ''}
+    <div class="title">${lv.title}</div>`;
+  c.onclick = () => {
+    if (lv.href) { location.href = lv.href; return; }
+    c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake');      // locked: a little shake, no message
+  };
+  grid.appendChild(c);
+}
+</script>
+</body>
+</html>
